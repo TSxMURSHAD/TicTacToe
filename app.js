@@ -10,17 +10,22 @@ let win = [
   [0, 4, 8],
   [2, 4, 6],
 ];
-
+let n = 0;
 let reset = document.querySelector("#reset");
 let playerTurn = document.querySelector("#player");
 let winner = document.querySelector(".turn");
 btn.forEach((button) => {
   button.addEventListener("click", () => {
+    n++;
     button.innerHTML = player;
     button.disabled = true;
-    checkWin();
     player = player === "X" ? "O" : "X";
     playerTurn.innerHTML = player;
+    if (n === 9) {
+      winner.innerHTML = "Game DRAW";
+      reset.innerHTML = "Play Again";
+    }
+    checkWin();
   });
 });
 let checkWin = () => {
@@ -39,7 +44,6 @@ let checkWin = () => {
         button.disabled = true;
       });
       reset.innerHTML = "Play Again";
-
     }
   });
 };
