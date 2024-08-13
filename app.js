@@ -11,23 +11,21 @@ let win = [
   [2, 4, 6],
 ];
 
+let reset = document.querySelector("#reset");
 let playerTurn = document.querySelector("#player");
 let winner = document.querySelector(".turn");
-function buttonToggle(id) {
-  btn[id].addEventListener("click", () => {
-    btn[id].innerHTML = player;
-    btn[id].disabled = true;
+btn.forEach((button) => {
+  button.addEventListener("click", () => {
+    button.innerHTML = player;
+    button.disabled = true;
     checkWin();
     player = player === "X" ? "O" : "X";
     playerTurn.innerHTML = player;
   });
-}
-function buttonDisable(id) {
-  btn[id].disabled = true;
-}
+});
 let checkWin = () => {
-  for (let i = 0; i < win.length; i++) {
-    let [a, b, c] = win[i];
+  win.forEach((pattern) => {
+    let [a, b, c] = pattern;
     if (
       btn[a].innerHTML !== "-" &&
       btn[a].innerHTML === btn[b].innerHTML &&
@@ -37,19 +35,15 @@ let checkWin = () => {
       btn[b].classList.add("boxWin");
       btn[c].classList.add("boxWin");
       winner.innerHTML = `${btn[a].innerHTML} wins`;
-      for (let i = 0; i < 9; i++) {
-        buttonDisable(i);
-      }
-      break;
+      btn.forEach((button) => {
+        button.disabled = true;
+      });
+      reset.innerHTML = "Play Again";
+
     }
-  }
+  });
 };
 
-for (let i = 0; i < 9; i++) {
-  buttonToggle(i);
-}
-
-let reset = document.querySelector("#reset");
 reset.addEventListener("click", () => {
   window.location.reload();
 });
